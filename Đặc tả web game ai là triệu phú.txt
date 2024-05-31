@@ -1,0 +1,68 @@
+1. Tổng quan dự án
+	Tên dự án: Web Game "Ai Là Triệu Phú"
+	Ngôn ngữ lập trình: PHP
+	Cơ sở dữ liệu: MySQL (sử dụng phpMyAdmin để quản lý)
+	Mục tiêu: Xây dựng một trò chơi web dựa trên chương trình "Ai Là Triệu Phú" với giao diện người dùng thân thiện, quản lý câu hỏi, và hệ thống điểm số.
+2. Chức năng chính
+2.1 Người chơi
+	Đăng ký/Đăng nhập: Người dùng có thể tạo tài khoản và đăng nhập để chơi.
+	Chơi game: Tham gia vào trò chơi với các câu hỏi từ dễ đến khó. Có 15 câu hỏi tương ứng với các mức tiền thưởng khác nhau.
+	Cứu trợ: Bao gồm 3 quyền trợ giúp: 50:50 (loại bỏ 2 đáp án sai), hỏi ý kiến khán giả, gọi điện cho người thân.
+	Bảng xếp hạng: Hiển thị điểm số cao nhất của các người chơi.
+2.2 Quản trị viên
+	Quản lý câu hỏi: Thêm, sửa, xóa câu hỏi. Mỗi câu hỏi bao gồm nội dung, 4 đáp án và đáp án đúng.
+	Quản lý người chơi: Xem và quản lý thông tin người chơi.
+	Báo cáo: Thống kê số lượng câu hỏi, số lượng người chơi, và các báo cáo liên quan.
+3. Cơ sở dữ liệu
+	3.1 Bảng users
+		id (INT, PRIMARY KEY, AUTO_INCREMENT)
+		username (VARCHAR)
+		password (VARCHAR, hashed)
+		email (VARCHAR)
+		score (INT)
+	.2 Bảng questions
+		id (INT, PRIMARY KEY, AUTO_INCREMENT)
+		question (TEXT)
+		option_a (VARCHAR)
+		option_b (VARCHAR)
+		option_c (VARCHAR)
+		option_d (VARCHAR)
+		correct_option (CHAR)
+	3.3 Bảng game_sessions
+		id (INT, PRIMARY KEY, AUTO_INCREMENT)
+		user_id (INT, FOREIGN KEY to users.id)
+		current_question (INT)
+		used_help_50_50 (BOOLEAN)
+		used_help_audience (BOOLEAN)
+		used_help_call (BOOLEAN)
+		score (INT)
+4. Giao diện người dùng
+	4.1 Trang chủ
+		Hiển thị các tùy chọn đăng nhập, đăng ký và bắt đầu chơi.
+	4.2 Trang chơi game
+		Hiển thị câu hỏi và các tùy chọn trả lời.
+		Hiển thị các quyền trợ giúp.
+		Hiển thị mức điểm hiện tại.
+	4.3 Trang quản trị
+		Giao diện để quản lý câu hỏi và người chơi.
+		Biểu đồ thống kê và báo cáo.
+5. Quy trình làm việc
+	Thiết kế cơ sở dữ liệu: Tạo các bảng và quan hệ cần thiết trong MySQL.
+	Xây dựng giao diện: Sử dụng HTML, CSS, và JavaScript để tạo giao diện người dùng.
+	Phát triển backend: Viết các script PHP để xử lý logic trò chơi, quản lý người dùng và câu hỏi.
+	Kết nối cơ sở dữ liệu: Sử dụng PHP MySQLi hoặc PDO để kết nối và thao tác với cơ sở dữ liệu.
+	Kiểm tra và triển khai: Kiểm tra toàn bộ hệ thống và triển khai trên máy chủ web.
+6. Công nghệ và công cụ sử dụng
+	PHP: Ngôn ngữ lập trình phía server.
+	MySQL: Cơ sở dữ liệu quan hệ.
+	phpMyAdmin: Công cụ quản lý MySQL.
+	HTML/CSS/JavaScript: Ngôn ngữ xây dựng giao diện người dùng.
+	XAMPP: Phần mềm cung cấp môi trường phát triển web trên máy local.
+7. Bảo mật
+	Bảo mật mật khẩu: Sử dụng hashing (bcrypt) cho mật khẩu.
+	Xác thực và phân quyền: Kiểm tra quyền truy cập cho các chức năng khác nhau.
+	Tránh SQL Injection: Sử dụng Prepared Statements.
+	Bảo mật dữ liệu: Sử dụng HTTPS để mã hóa dữ liệu trao đổi.
+8. Tài liệu và hỗ trợ
+	Tài liệu người dùng: Hướng dẫn sử dụng cho người chơi và quản trị viên.
+	Hỗ trợ kỹ thuật: Kênh hỗ trợ cho người dùng khi gặp sự cố.
