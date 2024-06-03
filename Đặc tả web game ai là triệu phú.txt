@@ -40,7 +40,7 @@
 	4.1 Trang chủ
 		Hiển thị các tùy chọn đăng nhập, đăng ký và bắt đầu chơi.
 	4.2 Trang chơi game
-		Hiển thị câu hỏi và các tùy chọn trả lời.
+		Hiển thị câu hỏi và các tùy chọn trả lời. <check>
 		Hiển thị các quyền trợ giúp.
 		Hiển thị mức điểm hiện tại.
 	4.3 Trang quản trị

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Đăng nhập </h1>
+        <form id="login-form" action="user/login.php" method="post">
+            <div class="login-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" id="username" name="username">
+                <span id="error-message-username" class="error-message"></span>
+            </div>
+            <div id="login-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" name="password">
+                <span id="error-message-password" class="error-message"></span>
+            </div>
+            <button type="submit">Đăng nhập</button>
+        </form>
+        <p>Chưa có tài khoản? <a href="register.html">Đăng kí</a></p>
+        <script src="js/login.js"></script>
+    </div>
+</body>
+</html>

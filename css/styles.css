@@ -33,3 +33,8 @@ button {
     text-align: center;
     margin: 5px; /* Thiết lập khoảng cách giữa các nút */
 }
+.error-message{
+    display: none;
+    color:red;
+    font-size: 0.8em;
+}
