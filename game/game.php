@@ -1,14 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "millionaire";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../user/conn_db.php';
 
 // Hàm để xác định mức độ câu hỏi dựa trên số lượng câu hỏi đã được trả lời
 function determineDifficulty($answeredQuestions) {

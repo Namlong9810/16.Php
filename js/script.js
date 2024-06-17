@@ -5,6 +5,21 @@ document.addEventListener("DOMContentLoaded", function() {
     let answeredQuestions = 0; // Khai báo số lượng câu hỏi đã được trả lời
     let currentAnswered = 1; // Khai báo câu hỏi hiện tại.
 
+
+    function loadHTML(elementId, url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById(elementId).innerHTML = data;
+            })
+            .catch(error => console.error('Error loading HTML:', error));
+    }
+
+    window.onload = function() {
+        loadHTML('header-placeholder', 'header/header.html');
+        loadHTML('footer-placeholder', 'footer/footer.html');
+    };
+
     function loadQuestion() {
         fetch('game/game.php?answered_questions=' + answeredQuestions)
             .then(response => response.json())
