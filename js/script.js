@@ -1,10 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
     const questionContainer = document.getElementById('question-container');
-    const nextButton = document.getElementById('next-button');
-    let currentScore = 0; // Khai báo điểm ban đầu
-    let answeredQuestions = 0; // Khai báo số lượng câu hỏi đã được trả lời
-    let currentAnswered = 1; // Khai báo câu hỏi hiện tại.
+    const saveProgressButton = document.getElementById('save-progress-button');
+    const logoutLink = document.getElementById('logout-link');
+    const userNameSpan = document.getElementById('user-name');
+    const welcomeMessage = document.getElementById('welcome-message');
 
+    let currentScore = 0;
+    let answeredQuestions = 0;
+    let currentAnswered = 1;
+    let useHelp5050 = false;
+    let useHelpWiseMan = false;
+    let useHelpCompanion= false;
 
     function loadHTML(elementId, url) {
         fetch(url)
@@ -15,17 +21,48 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error('Error loading HTML:', error));
     }
 
-    window.onload = function() {
-        loadHTML('header-placeholder', 'header/header.html');
-        loadHTML('footer-placeholder', 'footer/footer.html');
-    };
+    function logout() {
+        fetch('user/logout.php')
+            .then(response => {
+                if (response.ok) {
+                    console.log('Đăng xuất thành công.');
+                    window.location.href = 'login.html';
+                } else {
+                    console.error('Đăng xuất thất bại.');
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
+
+    function loadUserInfo() {
+        fetch('user/get_user_infor.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json(); // Parse JSON từ phản hồi
+            })
+            .then(data => {
+                if (data.username) {
+                    userNameSpan.textContent = data.username;
+                    welcomeMessage.style.display = 'inline-block';
+                } else {
+                    userNameSpan.textContent = Error('Lỗi');
+                    throw new Error('User information not found');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error.message); // In ra thông báo lỗi
+                // Xử lý các bước cần thiết khi xảy ra lỗi, ví dụ như hiển thị thông báo cho người dùng
+            });
+    }
 
     function loadQuestion() {
-        fetch('game/game.php?answered_questions=' + answeredQuestions)
+        fetch(`game/get_question.php?answered_questions=${answeredQuestions}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    questionContainer.innerHTML = '<p>' + data.error + '</p>';
+                    questionContainer.innerHTML = `<p>${data.error}</p>`;
                 } else {
                     questionContainer.innerHTML = `
                         <p>Câu hỏi số ${currentAnswered}: ${data.question}</p>
@@ -34,9 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <button class="option-btn" data-option="C">${data.option_c}</button>
                         <button class="option-btn" data-option="D">${data.option_d}</button>
                     `;
-                    // Bắt sự kiện click cho các nút đáp án
-                    const optionButtons = document.querySelectorAll('.option-btn');
-                    optionButtons.forEach(button => {
+                    document.querySelectorAll('.option-btn').forEach(button => {
                         button.addEventListener('click', function() {
                             const selectedOption = this.getAttribute('data-option');
                             checkAnswer(selectedOption, data.correct_option);
@@ -53,19 +88,47 @@ document.addEventListener("DOMContentLoaded", function() {
     function checkAnswer(selectedOption, correctOption) {
         if (selectedOption === correctOption) {
             alert('Chính xác!');
-            currentScore += 1; // Trả lời đúng, tăng điểm
-            currentAnswered +=1; // Tăng lên câu hỏi tiếp theo
-            answeredQuestions++; // Tăng số lượng câu hỏi đã trả lời
+            currentScore += 100;
+            currentAnswered++;
+            answeredQuestions++;
         } else {
             alert('Sai rồi!');
-            currentScore = 0; // Trả lời sai, đặt lại điểm
-            currentAnswered = 1; // Đặt lại số câu hỏi về ban đầu
-            answeredQuestions = 0; // Đặt lại số lượng câu hỏi đã trả lời được
+            currentScore = 0;
+            currentAnswered = 1;
+            answeredQuestions = 0;
         }
-        loadQuestion(); // Tải câu hỏi tiếp theo
+        saveGameSession();
+        loadQuestion();
     }
 
-    nextButton.addEventListener('click', loadQuestion);
+    function saveGameSession() {
+        fetch('game/save_session.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                score: currentScore,
+                answered_Questions: answeredQuestions,
+                use_help_50_50: useHelp5050,
+                use_help_wise_man: useHelpWiseMan,
+                use_help_companion: useHelpCompanion
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Save session error:', data.error);
+            } else {
+                console.log('Game session saved successfully.');
+            }
+        })
+        .catch(error => console.error('Fetch error:', error));
+    }
 
+    loadHTML('header-placeholder', 'header/header.html');
+    loadHTML('footer-placeholder', 'footer/footer.html');
+    loadUserInfo();
     loadQuestion();
+
+    saveProgressButton.addEventListener('click', saveGameSession);
+    logoutLink.addEventListener('click', logout)
 });

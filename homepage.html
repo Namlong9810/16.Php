@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ai Là Triệu Phú</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="warp">
         <div id="header-placeholder"></div>
+        <div id="welcome-message">
+            Xin chào, <span id="user-name"></span>!
+            <a href="#" id="logout-link">Thoát</a></p>
+        </div>
         <div class="container">
             <h1>Ai Là Triệu Phú</h1>
             <div id="question-container">
                 <!-- Câu hỏi và các tùy chọn sẽ được tải ở đây -->
             </div>
-            <button id="next-button">Câu hỏi tiếp theo</button>
+            <button id="save-progress-button">Lưu tiến trình</button>
         </div>
     </div>
         <div id="footer-placeholder"></div>
