@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_SESSION['user_id']) && isset($_SESSION['session_id'])) {
         $user_id = $_SESSION['user_id'];
         $session_id = $_SESSION['session_id'];
-        $score = $data['score'];
+        $score = $data['score']; //Điểm số hiện tại
         $answered_Questions = $data['answered_Questions'];
         $use_help_50_50 = $data['use_help_50_50'];
         $use_help_wise_man = $data['use_help_wise_man'];
@@ -25,24 +25,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $select = $conn->prepare("SELECT high_score, all_answered_Questions FROM game_session WHERE id = ? AND user_id = ?");
         $select->bind_param("ii", $session_id, $user_id);
         $select->execute();
-        $select->bind_result($current_score, $all_answered_Questions); // Sử dụng nhiều biến cho nhiều cột
+        $select->bind_result($high_score, $all_answered_Questions); // Sử dụng nhiều biến cho nhiều cột
         $select->fetch();
         $select->close();
 
         //Tạo biến lưu trữ các câu hỏi trả lời được
-        $new_answered_Questions = $answered_Questions +$all_answered_Questions;
+        $new_answered_Questions = $answered_Questions + $all_answered_Questions;
 
-        if($score > $current_score){
-            $stmt_update_score = $conn->prepare("UPDATE game_session SET high_score = ?, all_answered_Questions = ?, use_help_50_50 = ?, use_help_wise_man = ?, use_help_companion = ? WHERE id = ? AND user_id = ?");
-            $stmt_update_score->bind_param("iiiiiii",$score,$new_answered_Questions,$use_help_50_50,$use_help_wise_man,$use_help_company,$session_id,$user_id);
+        if($score > $high_score){
+            $stmt_update_score = $conn->prepare("UPDATE game_session SET high_score = ?, all_answered_Questions = ?, current_question = ?, use_help_50_50 = ?, use_help_wise_man = ?, use_help_companion = ?, current_score = ? WHERE id = ? AND user_id = ?");
+            $stmt_update_score->bind_param("iiiiiiiii", $score, $new_answered_Questions, $answered_Questions, $use_help_50_50, $use_help_wise_man, $use_help_company, $score, $session_id, $user_id);
             if($stmt_update_score->execute()){
                 $response['success'] = true;
             } else{
                 $response['error'] = 'Failed to save game session';
             }
             $stmt_update_score->close();
-        }else{$stmt = $conn->prepare("UPDATE game_session SET all_answered_Questions = ?, use_help_50_50 = ?, use_help_wise_man = ?, use_help_companion = ? WHERE id = ? AND user_id = ?");
-            $stmt->bind_param("iiiiii",$new_answered_Questions,$use_help_50_50,$use_help_wise_man,$use_help_company,$session_id,$user_id);
+        }else{$stmt = $conn->prepare("UPDATE game_session SET all_answered_Questions = ?, current_question = ?, use_help_50_50 = ?, use_help_wise_man = ?, use_help_companion = ?, current_score = ? WHERE id = ? AND user_id = ?");
+            $stmt->bind_param("iiiiiiii", $new_answered_Questions, $answered_Questions, $use_help_50_50, $use_help_wise_man, $use_help_company, $score, $session_id, $user_id);
             if ($stmt->execute()) {
                 $response['success'] = true;
             }

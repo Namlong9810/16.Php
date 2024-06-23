@@ -77,7 +77,9 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
+.add-button {
+    margin-left: 900px;
+}
 .edit-form {
     display: none; 
     background-color: #f9f9f9; 

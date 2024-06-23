@@ -19,6 +19,36 @@
         </nav>
     </div>
         <div id="admin-content">
+            <!-- Hiển thị bảng nút thêm câu hỏi -->
+            <button onclick="toggleAddForm()" class='add-button'>Thêm Câu Hỏi</button><br>
+
+            <!-- Hiển thị form thêm câu hỏi -->
+            <div id="add_form" class="edit-form">
+            <form action="mn_Question/add_question.php" method="POST">
+                Nội dung câu hỏi: <input type="text" name="question" required><br>
+                Đáp án A: <input type="text" name="option_a" required><br>
+                Đáp án B: <input type="text" name="option_b" required><br>
+                Đáp án C: <input type="text" name="option_c" required><br>
+                Đáp án D: <input type="text" name="option_d" required><br>
+                Đáp án đúng: <input type="text" name="correct_option" required><br>
+                Độ khó: <input type="text" name="difficulty" required><br>
+                <input type="submit" value="Lưu">
+            </form>
+            </div>
+
+        <div id="add_form" class="edit-form">
+            <form action="mn_Question/add_question.php" method="POST">
+                Nội dung câu hỏi: <input type="text" name="question" required><br>
+                Đáp án A: <input type="text" name="option_a" required><br>
+                Đáp án B: <input type="text" name="option_b" required><br>
+                Đáp án C: <input type="text" name="option_c" required><br>
+                Đáp án D: <input type="text" name="option_d" required><br>
+                Đáp án đúng: <input type="text" name="correct_option" required><br>
+                Độ khó: <input type="text" name="difficulty" required><br>
+                <input type="submit" value="Lưu">
+            </form>
+        </div>
+
             <!-- Hiển thị bảng dữ liệu câu hỏi -->
             <table border="1">
                 <tr>
@@ -53,7 +83,7 @@
                             <td style='text-align:center'>".$row['difficulty']."</td>
                             <td>
                                 <a href='#' onclick=\"toggleEditForm('edit_form_".$row['id']."')\">Sửa</a>
-                                <a href='delete_question.php?id=".$row['id']."' onclick=\"return confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')\">Xóa</a>
+                                <a href='mn_Question/delete_question.php?id=".$row['id']."' onclick=\"return confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')\">Xóa</a>
                             </td>
                         </tr>";
                         echo "<tr id='edit_form_".$row['id']."' class='edit-form'>
@@ -80,14 +110,23 @@
             </table>
         </div>
         <script>
-        function toggleEditForm(formId) {
-            var form = document.getElementById(formId);
-            if (form.style.display === 'none') {
-                form.style.display = 'table-row';
-            } else {
-                form.style.display = 'none';
+            function toggleAddForm() {
+                var form = document.getElementById('add_form');
+                if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
             }
-        }
+
+            function toggleEditForm(formId) {
+                var form = document.getElementById(formId);
+                if (form.style.display === 'none') {
+                    form.style.display = 'table-row';
+                } else {
+                    form.style.display = 'none';
+                }
+            }
         </script>
 </body>
 </html>
