@@ -76,7 +76,7 @@
                         echo "<tr id='edit_form_".$row['id']."' class='edit-form' style='display: none;'>
                             <td colspan='9'>
                                 <form action='mn_Question/update_question.php' method='POST'>
-                                    <input type='hidden' name='id' value='".$row['id'].">
+                                    <input type='hidden' name='id' value='".$row['id']."'>
                                     Nội dung câu hỏi: <input type='text' name='question' value='".$row['question']."'required><br>
                                     Đáp án A: <input type='text' name='option_a' value='".$row['option_a']."' required><br>
                                     Đáp án B: <input type='text' name='option_b' value='".$row['option_b']."'required><br>

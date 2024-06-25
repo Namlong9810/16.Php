@@ -7,19 +7,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $email = $_POST['email'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    $sql = "UPDATE users SET username = '$username',
-            password = '$hashed_password', email = '$email'
-            WHERE id='$id'";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Cập nhật thông tin thành công');</script>";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Địa chỉ email không hợp lệ.');</script>";
         echo "<script>window.location.href='../manage_users.php';</script>";
-    } else {
-        echo "<script>alert('Lỗi cập nhật: " . $conn->error . "');</script>";
-        echo "<script>window.location.href='../manage_users.php';</script>";
+    }else{
+        $sql = "UPDATE users SET username = '$username',
+        password = '$hashed_password', email = '$email'
+        WHERE id='$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('Cập nhật thông tin thành công');</script>";
+            echo "<script>window.location.href='../manage_users.php';</script>";
+        } else {
+            echo "<script>alert('Lỗi cập nhật: " . $conn->error . "');</script>";
+            echo "<script>window.location.href='../manage_users.php';</script>";
+        }
     }
 }
+    
 
 $conn->close();
 ?>
