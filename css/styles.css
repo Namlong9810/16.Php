@@ -24,7 +24,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-#welcome-message a{
+#welcome-message a{ 
     text-decoration: none;
 }
 #welcome-message a:hover{
@@ -132,9 +132,15 @@ footer a:hover{
         height: 120px;
         width: 310px;
 }
+.main-container {
+    display: flex;
+    justify-content: space-between;
+}
 .container {
+    position: absolute;
+    width: 80%;
     max-width: 600px;
-    margin: 50px auto;
+    margin: 50px 530px auto;
     background: #000066;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -236,5 +242,32 @@ footer a:hover{
 .help-btn i{
     margin:0 auto;
 }
+#leaderboard{
+    width: 20%;
+    color: white;
+    margin-left: 10px;
+}
 
+#tb-leaderboard {
+    width: 95%;
+    border-collapse: collapse;
+}
 
+#tb-leaderboard th, #tb-leaderboard td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tb-leaderboard th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+#tb-leaderboard tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    color: #333;
+}
+#tb-leaderboard tbody tr:nth-child(odd) {
+    background-color:#000066;
+}

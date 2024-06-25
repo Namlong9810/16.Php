@@ -44,11 +44,11 @@
                         <td>".$row['email']."</td>
                         <td>".substr($row['password'],0,15).'...'."</td>
                         <td>
-                            <a href='#' onclick=\"toggleEditForm('edit_form_".$row['id']."')\">Sửa</a>
+                            <a href='#' class='edit-link' data-form-id='edit_form_".$row['id']."')\">Sửa</a>
                             <a href='mn_Users/delete_user.php?id=".$row['id']."' onclick=\"return confirm('Bạn có chắc chắn muốn xóa người dùng này?')\">Xóa</a>
                         </td>
                     </tr>";
-                    echo "<tr id='edit_form_".$row['id']."' class='edit-form'>
+                    echo "<tr id='edit_form_".$row['id']."' class='edit-form' style='display: none;'>
                             <td colspan='5'>
                                 <form action='mn_Users/update_user.php' method='POST'>
                                     <input type='hidden' name='id' value='".$row['id']."'>
@@ -72,12 +72,27 @@
     <script>
         function toggleEditForm(formId) {
             var form = document.getElementById(formId);
-            if (form.style.display === 'none') {
+            if (form.style.display === 'none'|| form.style.display === '') {
                 form.style.display = 'table-row';
             } else {
                 form.style.display = 'none';
             }
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            var editLinks = document.querySelectorAll('.edit-link');
+            editLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var formId = this.getAttribute('data-form-id');
+                    var form = document.getElementById(formId);
+                    if (form.style.display === 'none' || form.style.display === '') {
+                        form.style.display = 'table-row';
+                    } else {
+                        form.style.display = 'none';
+                    }
+                });
+            });
+        });
         </script>
 </body>
 </html>

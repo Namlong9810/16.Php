@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const help5050Button = document.getElementById('help-50-50');
     const helpWiseMan = document.getElementById('help-wise-man');
     const helpCompanion  = document.getElementById('help-companion');
+
     
     let currentScore = 0; //Điểm số để lưu vào high score;
     let answeredQuestions = 0;
@@ -259,11 +260,36 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(error => console.error('Fetch error:', error));
     }
-
+    function loadLeaderboard() {
+        fetch('user/leaderboard.php')
+            .then(response => response.json())
+            .then(data => {
+                const leaderboardTableBody = document.getElementById('leaderboard').querySelector('tbody');
+                if (data.length === 0) {
+                    leaderboardTableBody.innerHTML = '<tr><td colspan="2">Không có dữ liệu bảng xếp hạng.</td></tr>';
+                } else {
+                    let leaderboardHTML = '';
+                    data.forEach(user => {
+                        leaderboardHTML += `
+                            <tr>
+                                <td>${user.username}</td>
+                                <td>${user.high_score}</td>
+                            </tr>
+                        `;
+                    });
+                    leaderboardTableBody.innerHTML = leaderboardHTML;
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                document.getElementById('leaderboard').querySelector('tbody').innerHTML = '<tr><td colspan="2">Có lỗi xảy ra khi tải bảng xếp hạng.</td></tr>';
+            });
+    }
     loadHTML('header-placeholder', 'header/header.html');
     loadHTML('footer-placeholder', 'footer/footer.html');
     loadUserInfo();
     loadGameSession();
+    loadLeaderboard();
 
     logoutLink.addEventListener('click', logout)
 });

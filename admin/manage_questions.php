@@ -36,19 +36,6 @@
             </form>
             </div>
 
-        <div id="add_form" class="edit-form">
-            <form action="mn_Question/add_question.php" method="POST">
-                Nội dung câu hỏi: <input type="text" name="question" required><br>
-                Đáp án A: <input type="text" name="option_a" required><br>
-                Đáp án B: <input type="text" name="option_b" required><br>
-                Đáp án C: <input type="text" name="option_c" required><br>
-                Đáp án D: <input type="text" name="option_d" required><br>
-                Đáp án đúng: <input type="text" name="correct_option" required><br>
-                Độ khó: <input type="text" name="difficulty" required><br>
-                <input type="submit" value="Lưu">
-            </form>
-        </div>
-
             <!-- Hiển thị bảng dữ liệu câu hỏi -->
             <table border="1">
                 <tr>
@@ -82,14 +69,14 @@
                             <td style='text-align:center'>".$row['correct_option']."</td>
                             <td style='text-align:center'>".$row['difficulty']."</td>
                             <td>
-                                <a href='#' onclick=\"toggleEditForm('edit_form_".$row['id']."')\">Sửa</a>
+                                <a href='#' class='edit-link' data-form-id='edit_form_".$row['id']."')\">Sửa</a>
                                 <a href='mn_Question/delete_question.php?id=".$row['id']."' onclick=\"return confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')\">Xóa</a>
                             </td>
                         </tr>";
-                        echo "<tr id='edit_form_".$row['id']."' class='edit-form'>
+                        echo "<tr id='edit_form_".$row['id']."' class='edit-form' style='display: none;'>
                             <td colspan='9'>
                                 <form action='mn_Question/update_question.php' method='POST'>
-                                    <input type='hidden' name='id' value='".$row['id']."'>
+                                    <input type='hidden' name='id' value='".$row['id'].">
                                     Nội dung câu hỏi: <input type='text' name='question' value='".$row['question']."'required><br>
                                     Đáp án A: <input type='text' name='option_a' value='".$row['option_a']."' required><br>
                                     Đáp án B: <input type='text' name='option_b' value='".$row['option_b']."'required><br>
@@ -119,14 +106,21 @@
                 }
             }
 
-            function toggleEditForm(formId) {
-                var form = document.getElementById(formId);
-                if (form.style.display === 'none') {
-                    form.style.display = 'table-row';
-                } else {
-                    form.style.display = 'none';
-                }
-            }
+            document.addEventListener('DOMContentLoaded', function() {
+            var editLinks = document.querySelectorAll('.edit-link');
+            editLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var formId = this.getAttribute('data-form-id');
+                    var form = document.getElementById(formId);
+                    if (form.style.display === 'none' || form.style.display === '') {
+                        form.style.display = 'table-row';
+                    } else {
+                        form.style.display = 'none';
+                    }
+                });
+            });
+        });
         </script>
 </body>
 </html>
