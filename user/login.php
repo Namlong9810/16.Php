@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($stmt->execute()) {
                     $new_session_id = $conn->insert_id;
                     $_SESSION['session_id'] = $new_session_id;
-                    echo "<script>alert('Đăng nhập thành công! Phiên chơi mới đã được tạo với ID: $new_session_id'); window.location.href='../homepage.html';</script>";
+                    echo "<script>alert('Đăng nhập thành công! Phiên chơi mới đã được tạo với ID: $new_session_id'); window.location.href='../Index.html';</script>";
                 } else {
                     echo "<script>alert('Đăng nhập thành công, nhưng không thể tạo phiên chơi mới!'); window.location.href='../login.html';</script>";
                 }
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_result($session_id);
                 $stmt->fetch();
                 $_SESSION['session_id'] = $session_id;
-                echo "<script>alert('Đăng nhập thành công! user_id: {$_SESSION['user_id']}, session_id: {$_SESSION['session_id']}'); window.location.href='../homepage.html';</script>";
+                echo "<script>alert('Đăng nhập thành công! user_id: {$_SESSION['user_id']}, session_id: {$_SESSION['session_id']}'); window.location.href='../Index.html';</script>";
             }
         } else {
             echo "<script>alert('Mật khẩu không đúng!'); window.location.href='../login.html';</script>";

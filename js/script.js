@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => {
                 if (response.ok) {
                     console.log('Đăng xuất thành công.');
-                    window.location.href = 'homepage.html';
+                    window.location.href = 'Index.html';
                 } else {
                     console.error('Đăng xuất thất bại.');
                 }
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => {
                 console.error('Fetch error:', error.message); // In ra thông báo lỗi
-                // Xử lý các bước cần thiết khi xảy ra lỗi, ví dụ như hiển thị thông báo cho người dùng
             });
     }
 

@@ -172,10 +172,12 @@ button {
     font-size: 16px;
 }
 .option-btn {
-    width: 200px; /* Thiết lập chiều rộng */
-    height: 40px; /* Thiết lập chiều cao */
+    width: 200px; /* Chiều rộng cố định */
+    min-width: 200px; /* Chiều rộng tối thiểu */
+    max-width: 100%; /* Chiều rộng tối đa là 100% của phần tử chứa */
+    height: auto; /* Chiều cao tự động điều chỉnh */
     text-align: center;
-    margin: 5px; /* Thiết lập khoảng cách giữa các nút */
+    margin: 5px; /* Khoảng cách giữa các nút */
 }
 .error-message{
     display: none;
