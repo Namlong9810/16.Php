@@ -2,6 +2,7 @@
     "name": "your-username/php-composer",
     "description": "A PHP project using Composer with GitHub Actions",
     "type": "project",
+    "license": "proprietary",
     "require": {
       "php": "^8.0"
     },
